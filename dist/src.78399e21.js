@@ -29616,11 +29616,11 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          onMovieCLick = _this$props.onMovieCLick;
+          onMovieClick = _this$props.onMovieClick;
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "movie-card",
         onClick: function onClick() {
-          onMovieCLick(movie);
+          onMovieClick(movie);
         }
       }, movie.Title);
     }
@@ -29678,7 +29678,9 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          onBackClick = _this$props.onBackClick;
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "movie-view"
       }, /*#__PURE__*/_react.default.createElement("div", {
@@ -29697,7 +29699,11 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
         className: "label"
       }, "Description: "), /*#__PURE__*/_react.default.createElement("span", {
         className: "value"
-      }, movie.Description)));
+      }, movie.Description)), /*#__PURE__*/_react.default.createElement("button", {
+        onClick: function onClick() {
+          onBackClick(null);
+        }
+      }, "Back"));
     }
   }]);
 
@@ -29792,23 +29798,24 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           movies = _this$state.movies,
           selectedMovie = _this$state.selectedMovie;
       if (selectedMovie) return /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
+        movie: selectedMovie,
+        onBackClick: function onBackClick(newSelectedMovie) {
+          _this2.setSelectedMovie(newSelectedMovie);
+        }
       });
       if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
       }, "The list is empty!");
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
-      }, /*#__PURE__*/_react.default.createElement("button", {
-        onClick: function onClick() {
-          alert('Nice!');
-        }
-      }, "Click Me!"), movies.map(function (movie) {
+      }, movies.map(function (movie) {
         return /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
           movie: movie,
-          onMovieClick: function onMovieClick(movie) {
-            _this2.setSelectedMovie(movie);
+          onMovieClick: function onMovieClick(newSelectedMovie) {
+            _this2.setState({
+              selectedMovie: newSelectedMovie
+            });
           }
         });
       }));
