@@ -32758,8 +32758,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "onMovieClick",
-    value: function onMovieClick(movie) {
+    key: "setSelectedMovie",
+    value: function setSelectedMovie(movie) {
       this.setState({
         selectedMovie: movie
       });
@@ -32805,19 +32805,22 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _this3.onRegister(register);
         }
       });
-      if (!movies) return /*#__PURE__*/_react.default.createElement("div", {
+      if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
       });
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
+        movie: selectedMovie,
+        onBackClick: function onBackClick(newSelectedMovie) {
+          _this3.setSelectedMovie(newSelectedMovie);
+        }
       }) : movies.map(function (movie) {
         return /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
           movie: movie,
-          onClick: function onClick(movie) {
-            return _this3.onMovieClick(movie);
+          onMovieClick: function onMovieClick(newSelectedMovie) {
+            _this3.setSelectedMovie(newSelectedMovie);
           }
         });
       }));
