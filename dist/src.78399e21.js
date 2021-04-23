@@ -32473,7 +32473,7 @@ MovieCard.propTypes = {
     Description: _propTypes.default.string.isRequired,
     ImagePath: _propTypes.default.string.isRequired
   }).isRequired,
-  onClick: _propTypes.default.func.isRequired
+  onMovieClick: _propTypes.default.func.isRequired
 };
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"components/movie-view/movie-view.jsx":[function(require,module,exports) {
 "use strict";
