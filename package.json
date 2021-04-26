@@ -12,7 +12,12 @@
     "axios": "^0.21.1",
     "pr": "^0.3.2",
     "prop-types": "^15.7.2",
+    "re": "^0.1.4",
+    "rea": "0.0.1",
+    "reac": "0.0.0",
+    "reacr": "^1.0.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
