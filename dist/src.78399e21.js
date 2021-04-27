@@ -48024,7 +48024,18 @@ function RegistrationView(props) {
     e.preventDefault();
     console.log(username, password, email, birthdate);
     props.onRegister(username);
-  };
+  }; // return (
+  //     <Form>
+  //         <Form.Group controlId='registerUsername'>
+  //             <Form.Label>Username:</Form.Label>
+  //             <Form.Control type='text' onChange={e => setUsername(e.target.value)} />
+  //         </Form.Group>
+  //         <Button variant='primary' type='submit' onClick={handleSubmit}>
+  //             Submit
+  //         </Button>
+  //     </Form>
+  // )
+
 
   return /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("label", null, "Username:", /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
@@ -48177,14 +48188,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           selectedMovie = _this$state.selectedMovie,
           user = _this$state.user,
           register = _this$state.register;
-      if (!user) return /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
-        onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
-        }
-      });
       if (!register) return /*#__PURE__*/_react.default.createElement(_registration.RegistrationView, {
         onRegister: function onRegister(register) {
           return _this3.onRegister(register);
+        }
+      });
+      if (!user) return /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+        onLoggedIn: function onLoggedIn(user) {
+          return _this3.onLoggedIn(user);
         }
       });
       if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
@@ -48386,7 +48397,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50475" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52888" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

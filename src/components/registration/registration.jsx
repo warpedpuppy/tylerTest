@@ -15,6 +15,18 @@ export function RegistrationView(props) {
         props.onRegister(username);
     }
 
+    // return (
+    //     <Form>
+    //         <Form.Group controlId='registerUsername'>
+    //             <Form.Label>Username:</Form.Label>
+    //             <Form.Control type='text' onChange={e => setUsername(e.target.value)} />
+    //         </Form.Group>
+    //         <Button variant='primary' type='submit' onClick={handleSubmit}>
+    //             Submit
+    //         </Button>
+    //     </Form>
+    // )
+
     return (
         <form>
             <label>
