@@ -15,7 +15,8 @@ export class MainView extends React.Component {
         this.state = {
             movies: [],
             selectedMovie: null,
-            user: null
+            user: null,
+            register: false
         };
     }
 
@@ -55,11 +56,18 @@ export class MainView extends React.Component {
         });
     }
 
+    toggleRegister = (e) => {
+        e.preventDefault();
+        this.setState({
+            register: !this.state.register
+        })
+    }
+
     render() {
         const { movies, selectedMovie, user, register } = this.state;
-        if (!register) return <RegistrationView onRegister={register => this.onRegister(register)}/>;
+        if (register) return <RegistrationView onRegister={register => this.onRegister(register)} toggleRegister={this.toggleRegister}/>;
 
-        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} toggleRegister={this.toggleRegister}/>;
 
         if (movies.length === 0) return <div className='main-view'/>;
         
@@ -75,8 +83,8 @@ export class MainView extends React.Component {
                     )
                     : (
                         <Row className='justify-content-md-center'>
-                            {movies.map(movie => (
-                                <Col md={3}>
+                            {movies.map((movie, index) => (
+                                <Col md={3} key={index}>
                                     <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie); }}/>
                                 </Col>
                             ))}
