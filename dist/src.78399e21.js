@@ -33942,6 +33942,8 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -33973,18 +33975,23 @@ function LoginView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    console.log(username, password);
-    /* Send a request to the server for authentication */
 
-    /* the call props.onLoggedIn(username) */
-
-    props.onLoggedIn(username);
+    _axios.default.post('boemyflix/login', {
+      Username: username,
+      Password: password
+    }).then(function (response) {
+      var data = response.data;
+      props.onLoggedIn(data);
+    }).catch(function (e) {
+      console.log('no such user');
+    });
   };
 
   return /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
+    placeholder: "Enter Username",
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
@@ -33992,19 +33999,20 @@ function LoginView(props) {
     controlId: "formPassword"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Password:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "password",
+    placeholder: "Enter Password",
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
   })), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    variant: "primary",
-    onClick: props.toggleRegister
-  }, "New User"), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    variant: "primary",
+    variant: "success",
     type: "submit",
     onClick: handleSubmit
-  }, "Submit"));
+  }, "Submit"), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "primary",
+    onClick: props.toggleRegister
+  }, "New User"));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","axios":"../node_modules/axios/index.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34474,12 +34482,12 @@ function RegistrationView(props) {
     }
   })), /*#__PURE__*/_react.default.createElement(_Button.default, {
     variant: "primary",
-    onClick: props.toggleRegister
-  }, "Existing User"), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Submit")); // return (
+  }, "Submit"), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "primary",
+    onClick: props.toggleRegister
+  }, "Existing User")); // return (
   //     <form>
   //         <label>
   //             Username:
