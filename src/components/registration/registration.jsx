@@ -34,7 +34,7 @@ export function RegistrationView(props) {
                 <Form.Control type='text' onChange={e => setBirthdate(e.target.value)} />
             </Form.Group>
             
-            <Button variant='primary' type='submit' onClick={handleSubmit}>
+            <Button variant='success' type='submit' onClick={handleSubmit}>
                 Submit
             </Button>
             <Button variant='primary' onClick={props.toggleRegister}>
