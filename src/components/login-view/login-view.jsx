@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import config from '../../config'
 
 export function LoginView(props) {
     const [ username, setUsername ] = useState('');
@@ -9,7 +10,7 @@ export function LoginView(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('boemyflix/login', {
+        axios.post(`${config.APIURL}/login`, {
             Username: username,
             Password: password
         })

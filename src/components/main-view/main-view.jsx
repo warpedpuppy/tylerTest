@@ -7,6 +7,7 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration/registration';
+import config from '../../config'
 
 export class MainView extends React.Component {
 
@@ -21,7 +22,7 @@ export class MainView extends React.Component {
     }
 
     componentDidMount(){
-        axios.get('https://boemyflix.herokuapp.com/movies')
+        axios.get(`${config.APIURL}/movies`)
             .then(response => {
                 this.setState({
                     movies: response.data
@@ -69,7 +70,7 @@ export class MainView extends React.Component {
 
         if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} toggleRegister={this.toggleRegister}/>;
 
-        if (movies.length === 0) return <div className='main-view'/>;
+        if (movies.length === 0) return <div className='main-view' />;
         
         return (
             <div className='main-view'>
