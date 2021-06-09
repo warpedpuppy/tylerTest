@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 export class MovieView extends React.Component {
 
@@ -21,7 +23,7 @@ export class MovieView extends React.Component {
         return (
             <div className='movie-view'>
                 <div className='movie-poster'>
-                    <img src={movie.ImagePath} />
+                    <img src={`/img/${movie.ImagePath}`} />
                 </div>
                 <div className='movie-title'>
                     <span className='label'>Title: </span>
@@ -31,13 +33,21 @@ export class MovieView extends React.Component {
                     <span className='label'>Description: </span>
                     <span className='value'>{movie.Description}</span>
                 </div>
-                <button onClick={() => { onBackClick(null); }}>Back</button>
+                <Link to={`/directors/${movie.Director.Name}`}>
+                    <Button variant='link'>Director</Button>
+                </Link>
+                <Link to={`/genres/${movie.Genre.Name}`}>
+                    <Button variant='link'>Genre</Button>
+                </Link>
+                <Link to={`/`}>
+                    <Button variant='primary'>Back</Button>
+                </Link>
             </div>
         );
     }
 }
 
-MovieView.PropTypes = {
+MovieView.propTypes = {
     movie: PropTypes.shape({
         Title: PropTypes.string.isRequired,
         Description: PropTypes.string.isRequired,
@@ -53,5 +63,5 @@ MovieView.PropTypes = {
             Death: PropTypes.string,
         }),
     }).isRequired,
-    onClick: PropTypes.func.isRequired
+    onBackClick: PropTypes.func.isRequired
 };
