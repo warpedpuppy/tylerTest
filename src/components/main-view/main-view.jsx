@@ -7,6 +7,8 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration/registration';
+import { DirectorsView } from '../directors-view/directors-view';
+import { GenresView } from '../genres-view/genres-view';
 import config from '../../config'
 
 import Row from 'react-bootstrap/Row';
@@ -98,12 +100,12 @@ export class MainView extends React.Component {
         const { movies, selectedMovie, user, register } = this.state;
         if (register) return <RegistrationView onRegister={register => this.onRegister(register)} toggleRegister={this.toggleRegister}/>;
 
-        if (!user) return 
+        if (!user) return (
             <Row>
                 <Col>
                     <LoginView onLoggedIn={user => this.onLoggedIn(user)} toggleRegister={this.toggleRegister}/>
                 </Col>
-            </Row>;
+            </Row>);
 
         if (movies.length === 0) return <div className='main-view' />;
         
@@ -118,10 +120,23 @@ export class MainView extends React.Component {
                         ))
                     }} />
                     <Route path='/movies/:movieId' render={({ match }) => {
-                        return
+                        return (
                             <Col md={8}>
                                 <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
+                            </Col>)
+                    }} />
+                    <Route exact path='/genres/:name' render={({match}) => {
+                        return (
+                            <Col md={8}>
+                                <GenresView movies={movies.filter(m => m.Genre.Name === match.params.name)} />
                             </Col>
+                        )
+                    }} />
+                    <Route exact path='/directors/:name' render={({match}) => {
+                        return (
+                            <Col md={8}>
+                                <DirectorsView movies={movies.filter(m => m.Director.Name === match.params.name)} />
+                            </Col>)
                     }} />
                 </Row>
             </Router>
