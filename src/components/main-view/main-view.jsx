@@ -113,30 +113,43 @@ export class MainView extends React.Component {
             <Router>
                 <Row className='main-view justify-content-md-center'>
                     <Route exact path='/' render={() => {
+                        if (!user) return <Col>
+                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                        </Col>
                         return movies.map(m => (
                             <Col md={3} key={m._id}>
                                 <MovieCard movie={m} />
                             </Col>
                         ))
                     }} />
+                    <Route path='/register' render={() => {
+                        return <Col>
+                            <RegistrationView />
+                        </Col>
+                    }} />
                     <Route path='/movies/:movieId' render={({ match }) => {
-                        return (
-                            <Col md={8}>
+                        if (!user) return <Col>
+                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                        </Col>
+                        return <Col md={8}>
                                 <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
-                            </Col>)
-                    }} />
-                    <Route exact path='/genres/:name' render={({match}) => {
-                        return (
-                            <Col md={8}>
-                                <GenresView movies={movies.filter(m => m.Genre.Name === match.params.name)} />
                             </Col>
-                        )
                     }} />
-                    <Route exact path='/directors/:name' render={({match}) => {
-                        return (
-                            <Col md={8}>
+                    <Route exact path='/genres/:name' render={({ match }) => {
+                        if (!user) return <Col>
+                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                        </Col>
+                        return <Col md={8}>
+                                <GenresView movies={movies.filter(m => m.Genre.Name === match.params.name)} />
+                            </Col>     
+                    }} />
+                    <Route exact path='/directors/:name' render={({ match }) => {
+                        if (!user) return <Col>
+                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                        </Col>
+                        return <Col md={8}>
                                 <DirectorsView movies={movies.filter(m => m.Director.Name === match.params.name)} />
-                            </Col>)
+                            </Col>
                     }} />
                 </Row>
             </Router>

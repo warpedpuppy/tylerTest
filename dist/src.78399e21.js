@@ -51321,6 +51321,10 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
+var _config = _interopRequireDefault(require("../../config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -51360,10 +51364,21 @@ function RegistrationView(props) {
       birthdate = _useState8[0],
       setBirthdate = _useState8[1];
 
-  var handleSubmit = function handleSubmit(e) {
+  var handleRegister = function handleRegister(e) {
     e.preventDefault();
-    console.log(username, password, email, birthdate);
-    props.onRegister(username);
+
+    _axios.default.post("".concat(_config.default.APIURL, "/users"), {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthdate: birthdate
+    }).then(function (response) {
+      var data = response.data;
+      console.log(data);
+      window.open('/', '_self');
+    }).catch(function (e) {
+      console.log('error registering the user');
+    });
   };
 
   return /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
@@ -51397,7 +51412,7 @@ function RegistrationView(props) {
   })), /*#__PURE__*/_react.default.createElement(_Button.default, {
     variant: "success",
     type: "submit",
-    onClick: handleSubmit
+    onClick: handleRegister
   }, "Submit"), /*#__PURE__*/_react.default.createElement(_Button.default, {
     variant: "primary",
     onClick: props.toggleRegister
@@ -51427,7 +51442,7 @@ function RegistrationView(props) {
 RegistrationView.Proptypes = {
   onRegister: _propTypes.default.func.isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"components/directors-view/directors-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","axios":"../node_modules/axios/index.js","../../config":"config.js"}],"components/directors-view/directors-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51674,6 +51689,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/",
         render: function render() {
+          if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          }));
           return movies.map(function (m) {
             return /*#__PURE__*/_react.default.createElement(_Col.default, {
               md: 3,
@@ -51684,9 +51704,19 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           });
         }
       }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+        path: "/register",
+        render: function render() {
+          return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_registration.RegistrationView, null));
+        }
+      }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         path: "/movies/:movieId",
         render: function render(_ref) {
           var match = _ref.match;
+          if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          }));
           return /*#__PURE__*/_react.default.createElement(_Col.default, {
             md: 8
           }, /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
@@ -51700,6 +51730,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         path: "/genres/:name",
         render: function render(_ref2) {
           var match = _ref2.match;
+          if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          }));
           return /*#__PURE__*/_react.default.createElement(_Col.default, {
             md: 8
           }, /*#__PURE__*/_react.default.createElement(_genresView.GenresView, {
@@ -51713,6 +51748,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         path: "/directors/:name",
         render: function render(_ref3) {
           var match = _ref3.match;
+          if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          }));
           return /*#__PURE__*/_react.default.createElement(_Col.default, {
             md: 8
           }, /*#__PURE__*/_react.default.createElement(_directorsView.DirectorsView, {
@@ -51894,7 +51934,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61274" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62554" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

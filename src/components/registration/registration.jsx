@@ -2,17 +2,31 @@ import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
+import axios from 'axios';
+import config from '../../config';
+ 
 export function RegistrationView(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [birthdate, setBirthdate] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleRegister = (e) => {
         e.preventDefault();
-        console.log(username, password, email, birthdate);
-        props.onRegister(username);
+        axios.post(`${config.APIURL}/users`, {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthdate: birthdate
+        })
+        .then(response => {
+            const data = response.data;
+            console.log(data);
+            window.open('/', '_self');
+        })
+        .catch(e => {
+            console.log('error registering the user')
+        });
     }
 
     return (
@@ -34,7 +48,7 @@ export function RegistrationView(props) {
                 <Form.Control type='text' onChange={e => setBirthdate(e.target.value)} />
             </Form.Group>
             
-            <Button variant='success' type='submit' onClick={handleSubmit}>
+            <Button variant='success' type='submit' onClick={handleRegister}>
                 Submit
             </Button>
             <Button variant='primary' onClick={props.toggleRegister}>

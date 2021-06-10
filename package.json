@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "a": "^2.1.2",
     "axios": "^0.21.1",
     "pr": "^0.3.2",
     "prop-types": "^15.7.2",
