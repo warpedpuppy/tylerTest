@@ -17,6 +17,7 @@ export class MovieCard extends React.Component {
                     <Link to={`/movies/${movie._id}`}>
                         <Button variant='link'>Open</Button>
                     </Link>
+                    <Button variant='primary'>Add to Favorites</Button>
                 </Card.Body>
             </Card>
         );
@@ -28,6 +29,5 @@ MovieCard.propTypes = {
         Title: PropTypes.string.isRequired,
         Description: PropTypes.string.isRequired,
         ImagePath: PropTypes.string.isRequired
-    }).isRequired,
-    onMovieClick: PropTypes.func.isRequired
+    }).isRequired
 };
