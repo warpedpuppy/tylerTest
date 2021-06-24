@@ -51554,7 +51554,7 @@ function ProfileView(props) {
     });
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Update Information"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "registerUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -51586,10 +51586,7 @@ function ProfileView(props) {
     variant: "success",
     type: "submit",
     onClick: updateUserInfo
-  }, "Submit"), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    variant: "primary",
-    onClick: props.toggleRegister
-  }, "Existing User")), /*#__PURE__*/_react.default.createElement("h2", null, "Favorite Movies"), props.favoriteMovies.map(function (m) {
+  }, "Submit")), /*#__PURE__*/_react.default.createElement("h2", null, "Favorite Movies"), props.favoriteMovies.map(function (m) {
     return /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
       key: m._id,
       movie: m
@@ -52086,7 +52083,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53473" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55101" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

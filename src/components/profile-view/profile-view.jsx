@@ -31,6 +31,7 @@ export function ProfileView(props) {
 
     return (
         <div>
+            <h2>Update Information</h2>
             <Form>
                 <Form.Group controlId='registerUsername'>
                     <Form.Label>Username:</Form.Label>
@@ -51,9 +52,6 @@ export function ProfileView(props) {
                 
                 <Button variant='success' type='submit' onClick={updateUserInfo}>
                     Submit
-                </Button>
-                <Button variant='primary' onClick={props.toggleRegister}>
-                    Existing User
                 </Button>  
             </Form>
             <h2>Favorite Movies</h2>
