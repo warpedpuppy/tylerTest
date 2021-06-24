@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -9,6 +9,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration/registration';
 import { DirectorsView } from '../directors-view/directors-view';
 import { GenresView } from '../genres-view/genres-view';
+import { ProfileView } from '../profile-view/profile-view';
 import config from '../../config'
 
 import Row from 'react-bootstrap/Row';
@@ -23,6 +24,7 @@ export class MainView extends React.Component {
             movies: [],
             selectedMovie: null,
             user: null,
+            userData: {FavoriteMovies: []},
             register: false
         };
     }
@@ -30,10 +32,12 @@ export class MainView extends React.Component {
     componentDidMount() {
         let accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
+            let user = localStorage.getItem('user')
             this.setState({
-                user: localStorage.getItem('user')
+                user: user
             });
             this.getMovies(accessToken);
+            this.getUserData(user, accessToken)
         }
     }
 
@@ -58,10 +62,26 @@ export class MainView extends React.Component {
         });
     }
 
+    getUserData(username, token) {
+        axios.get(`${config.APIURL}/users/${username}`, {
+            headers: { Authorization: `Bearer ${token}`}
+        })
+        .then(response => {
+            // Assign the result to the state
+            this.setState({
+                userData: response.data
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
     onLoggedIn(authData) {
-        console.log(authData);
+        // console.log(authData);
         this.setState({
-            user: authData.user.Username
+            user: authData.user.Username,
+            userData: authData.user
         });
 
         localStorage.setItem('token', authData.token);
@@ -96,8 +116,15 @@ export class MainView extends React.Component {
         })
     }
 
+    toggleUserView = (e) => {
+        e.preventDefault();
+        this.setState({
+            // switch to profile-view
+        })
+    }
+
     render() {
-        const { movies, selectedMovie, user, register } = this.state;
+        const { movies, selectedMovie, user, register, userData } = this.state;
         if (register) return <RegistrationView onRegister={register => this.onRegister(register)} toggleRegister={this.toggleRegister}/>;
 
         if (!user) return (
@@ -110,49 +137,67 @@ export class MainView extends React.Component {
         if (movies.length === 0) return <div className='main-view' />;
         
         return (
-            <Router>
-                <Row className='main-view justify-content-md-center'>
-                    <Route exact path='/' render={() => {
-                        if (!user) return <Col>
-                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-                        </Col>
-                        return movies.map(m => (
-                            <Col md={3} key={m._id}>
-                                <MovieCard movie={m} />
+            <div>
+                
+                
+                <Router>
+                    <Link to='/userview'>
+                        <Button variant='primary'>
+                            Go to Profile
+                        </Button>
+                    </Link>
+                    <Row className='main-view justify-content-md-center'>
+                        <Route exact path='/' render={() => {
+                            if (!user) return <Col>
+                                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
-                        ))
-                    }} />
-                    <Route path='/register' render={() => {
-                        return <Col>
-                            <RegistrationView />
-                        </Col>
-                    }} />
-                    <Route path='/movies/:movieId' render={({ match }) => {
-                        if (!user) return <Col>
-                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-                        </Col>
-                        return <Col md={8}>
-                                <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
+                            return movies.map(m => (
+                                <Col md={3} key={m._id}>
+                                    <MovieCard movie={m} />
+                                </Col>
+                            ))
+                        }} />
+                        <Route path='/register' render={() => {
+                            return <Col>
+                                <RegistrationView />
                             </Col>
-                    }} />
-                    <Route exact path='/genres/:name' render={({ match }) => {
-                        if (!user) return <Col>
-                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-                        </Col>
-                        return <Col md={8}>
-                                <GenresView movies={movies.filter(m => m.Genre.Name === match.params.name)} />
-                            </Col>     
-                    }} />
-                    <Route exact path='/directors/:name' render={({ match }) => {
-                        if (!user) return <Col>
-                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-                        </Col>
-                        return <Col md={8}>
-                                <DirectorsView movies={movies.filter(m => m.Director.Name === match.params.name)} />
+                        }} />
+                        <Route path='/movies/:movieId' render={({ match }) => {
+                            if (!user) return <Col>
+                                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
-                    }} />
-                </Row>
-            </Router>
+                            return <Col md={8}>
+                                    <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
+                                </Col>
+                        }} />
+                        <Route exact path='/genres/:name' render={({ match }) => {
+                            if (!user) return <Col>
+                                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                            </Col>
+                            return <Col md={8}>
+                                    <GenresView movies={movies.filter(m => m.Genre.Name === match.params.name)} />
+                                </Col>     
+                        }} />
+                        <Route exact path='/directors/:name' render={({ match }) => {
+                            if (!user) return <Col>
+                                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                            </Col>
+                            return <Col md={8}>
+                                    <DirectorsView movies={movies.filter(m => m.Director.Name === match.params.name)} />
+                                </Col>
+                        }} />
+                        <Route exact path='/userview' render={() => {
+                            if (!user) {
+                                return <Col>
+                                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                            </Col>}
+                            return (
+                                <ProfileView favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))} userData={userData} />
+                            )
+                        }} />
+                    </Row>
+                </Router>
+            </div>
         );
     }
 }
