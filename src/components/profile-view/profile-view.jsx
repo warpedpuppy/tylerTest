@@ -56,6 +56,7 @@ export function ProfileView(props) {
             </Form>
             <h2>Favorite Movies</h2>
             {props.favoriteMovies.map((m) => <MovieCard key={m._id} movie={m} />)}
+            <Button variant='danger'>Deregister</Button>
         </div>
     )
 }

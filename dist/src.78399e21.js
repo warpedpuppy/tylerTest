@@ -36987,8 +36987,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var config = {
-  APIURL: 'https://boemyflix.herokuapp.com' // APIURL: 'http:localhost:8080'
-
+  // APIURL: 'https://boemyflix.herokuapp.com',
+  APIURL: 'http://localhost:8001'
 };
 var _default = config;
 exports.default = _default;
@@ -37047,6 +37047,7 @@ function LoginView(props) {
       Password: password
     }).then(function (response) {
       var data = response.data;
+      console.log(data);
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log('no such user');
@@ -37326,7 +37327,9 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         to: "/movies/".concat(movie._id)
       }, /*#__PURE__*/_react.default.createElement(_Button.default, {
         variant: "link"
-      }, "Open"))));
+      }, "Open")), /*#__PURE__*/_react.default.createElement(_Button.default, {
+        variant: "primary"
+      }, "Add to Favorites")));
     }
   }]);
 
@@ -51278,7 +51281,9 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
         to: "/"
       }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
         variant: "primary"
-      }, "Back")));
+      }, "Back")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
+        variant: "primary"
+      }, "Add to Favorites"));
     }
   }]);
 
@@ -51373,8 +51378,7 @@ function RegistrationView(props) {
       Birthdate: birthdate
     }).then(function (response) {
       var data = response.data;
-      console.log(data);
-      window.open('/', '_self');
+      console.log(data); // window.open('/', '_self');
     }).catch(function (e) {
       console.log('error registering the user');
     });
@@ -51591,7 +51595,9 @@ function ProfileView(props) {
       key: m._id,
       movie: m
     });
-  }));
+  }), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "danger"
+  }, "Deregister"));
 }
 },{"react":"../node_modules/react/index.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","axios":"../node_modules/axios/index.js","../../config":"config.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
@@ -51686,7 +51692,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       movies: [],
       selectedMovie: null,
       user: null,
-      userData: null,
+      userData: {
+        FavoriteMovies: []
+      },
       register: false
     };
     return _this;
@@ -51703,7 +51711,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           user: user
         });
         this.getMovies(accessToken);
-        this.getUserData(user);
+        this.getUserData(user, accessToken);
       }
     }
   }, {
@@ -51733,7 +51741,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "getUserData",
-    value: function getUserData(username) {
+    value: function getUserData(username, token) {
       var _this3 = this;
 
       _axios.default.get("".concat(_config.default.APIURL, "/users/").concat(username), {
@@ -51810,10 +51818,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
       });
-      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Button.default, {
-        variant: "primary",
-        onClick: this.toggleUserView
-      }, "Go to Profile"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_Row.default, {
+      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+        to: "/userview"
+      }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+        variant: "primary"
+      }, "Go to Profile")), /*#__PURE__*/_react.default.createElement(_Row.default, {
         className: "main-view justify-content-md-center"
       }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -52083,7 +52092,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55101" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63948" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

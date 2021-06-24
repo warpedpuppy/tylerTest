@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -24,7 +24,7 @@ export class MainView extends React.Component {
             movies: [],
             selectedMovie: null,
             user: null,
-            userData: null,
+            userData: {FavoriteMovies: []},
             register: false
         };
     }
@@ -37,7 +37,7 @@ export class MainView extends React.Component {
                 user: user
             });
             this.getMovies(accessToken);
-            this.getUserData(user)
+            this.getUserData(user, accessToken)
         }
     }
 
@@ -62,7 +62,7 @@ export class MainView extends React.Component {
         });
     }
 
-    getUserData(username) {
+    getUserData(username, token) {
         axios.get(`${config.APIURL}/users/${username}`, {
             headers: { Authorization: `Bearer ${token}`}
         })
@@ -138,10 +138,14 @@ export class MainView extends React.Component {
         
         return (
             <div>
-                <Button variant='primary' onClick={this.toggleUserView}>
-                    Go to Profile
-                </Button>
+                
+                
                 <Router>
+                    <Link to='/userview'>
+                        <Button variant='primary'>
+                            Go to Profile
+                        </Button>
+                    </Link>
                     <Row className='main-view justify-content-md-center'>
                         <Route exact path='/' render={() => {
                             if (!user) return <Col>
