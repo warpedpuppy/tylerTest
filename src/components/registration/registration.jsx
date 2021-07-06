@@ -13,6 +13,7 @@ export function RegistrationView(props) {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        console.log(username, password, email, birthdate);
         axios.post(`${config.APIURL}/users`, {
             Username: username,
             Password: password,
