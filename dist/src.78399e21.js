@@ -37279,7 +37279,11 @@ var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 var _reactRouterDom = require("react-router-dom");
+
+var _config = _interopRequireDefault(require("../../config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37305,15 +37309,49 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var MovieCard = /*#__PURE__*/function (_React$Component) {
   _inherits(MovieCard, _React$Component);
 
   var _super = _createSuper(MovieCard);
 
   function MovieCard() {
+    var _this;
+
     _classCallCheck(this, MovieCard);
 
-    return _super.apply(this, arguments);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "addToFavs", function () {
+      _axios.default.post("".concat(_config.default.APIURL, "/users/").concat(_this.props.user, "/movies/").concat(_this.props.movie._id), {}, {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (result) {
+        _this.props.addFavoriteToUserData(_this.props.movie._id);
+      }).catch(function (e) {
+        console.error(e);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "removeFromFavs", function () {
+      _axios.default.delete("".concat(_config.default.APIURL, "/users/").concat(_this.props.user, "/movies/").concat(_this.props.movie._id), {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (result) {
+        _this.props.removeFavoriteFromUserData(_this.props.movie._id);
+      }).catch(function (e) {
+        console.error(e);
+      });
+    });
+
+    return _this;
   }
 
   _createClass(MovieCard, [{
@@ -37327,9 +37365,13 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         to: "/movies/".concat(movie._id)
       }, /*#__PURE__*/_react.default.createElement(_Button.default, {
         variant: "link"
-      }, "Open")), /*#__PURE__*/_react.default.createElement(_Button.default, {
-        variant: "primary"
-      }, "Add to Favorites")));
+      }, "Open")), !this.props.userData.FavoriteMovies.includes(movie._id) && /*#__PURE__*/_react.default.createElement(_Button.default, {
+        variant: "primary",
+        onClick: this.addToFavs
+      }, "Add to Favorites"), this.props.userData.FavoriteMovies.includes(movie._id) && /*#__PURE__*/_react.default.createElement(_Button.default, {
+        variant: "danger",
+        onClick: this.removeFromFavs
+      }, "Remove from Favorites")));
     }
   }]);
 
@@ -37344,7 +37386,7 @@ MovieCard.propTypes = {
     ImagePath: _propTypes.default.string.isRequired
   }).isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../node_modules/invariant/browser.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../config":"config.js"}],"../node_modules/invariant/browser.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -51370,6 +51412,7 @@ function RegistrationView(props) {
 
   var handleRegister = function handleRegister(e) {
     e.preventDefault();
+    console.log(username, password, email, birthdate);
 
     _axios.default.post("".concat(_config.default.APIURL, "/users"), {
       Username: username,
@@ -51645,6 +51688,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -51678,6 +51725,26 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, MainView);
 
     _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "addFavoriteToUserData", function (id) {
+      var tempObject = _objectSpread({}, _this.state.userData);
+
+      tempObject.FavoriteMovies.push(id);
+
+      _this.setState({
+        userData: tempObject
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "removeFavoriteFromUserData", function (id) {
+      var tempObject = _objectSpread({}, _this.state.userData);
+
+      tempObject.FavoriteMovies.splice(tempObject.FavoriteMovies.indexOf(id), 1);
+
+      _this.setState({
+        userData: tempObject
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "toggleRegister", function (e) {
       e.preventDefault();
@@ -51844,7 +51911,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
               md: 3,
               key: m._id
             }, /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
-              movie: m
+              movie: m,
+              userData: userData,
+              user: user,
+              addFavoriteToUserData: _this4.addFavoriteToUserData,
+              removeFavoriteFromUserData: _this4.removeFavoriteFromUserData
             }));
           });
         }
@@ -52098,7 +52169,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50595" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61773" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

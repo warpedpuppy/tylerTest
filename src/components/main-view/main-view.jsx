@@ -77,6 +77,26 @@ export class MainView extends React.Component {
         });
     }
 
+    addFavoriteToUserData= (id) => {
+        let tempObject= {
+            ...this.state.userData
+        }
+        tempObject.FavoriteMovies.push(id)
+        this.setState({
+            userData: tempObject
+        })
+    }
+
+    removeFavoriteFromUserData= (id) => {
+        let tempObject= {
+            ...this.state.userData
+        }
+        tempObject.FavoriteMovies.splice(tempObject.FavoriteMovies.indexOf(id), 1)
+        this.setState({
+            userData: tempObject
+        })
+    }
+
     onLoggedIn(authData) {
         // console.log(authData);
         this.setState({
@@ -153,7 +173,7 @@ export class MainView extends React.Component {
                             </Col>
                             return movies.map(m => (
                                 <Col md={3} key={m._id}>
-                                    <MovieCard movie={m} />
+                                    <MovieCard movie={m} userData={userData} user={user} addFavoriteToUserData={this.addFavoriteToUserData} removeFavoriteFromUserData={this.removeFavoriteFromUserData} />
                                 </Col>
                             ))
                         }} />
