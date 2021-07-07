@@ -36,19 +36,19 @@ export function ProfileView(props) {
             <Form>
                 <Form.Group controlId='registerUsername'>
                     <Form.Label>Username:</Form.Label>
-                    <Form.Control type='text' onChange={e => setUsername(e.target.value)} />
+                    <Form.Control type='text' placeholder='required length of 5 min.' onChange={e => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group controlId='registerPassword'>
                     <Form.Label>Password:</Form.Label>
-                    <Form.Control type='password' onChange={e => setPassword(e.target.value)} />
+                    <Form.Control type='password' placeholder='required' onChange={e => setPassword(e.target.value)} />
                 </Form.Group>
                 <Form.Group controlId='registerEmail'>
                     <Form.Label>Email:</Form.Label>
-                    <Form.Control type='text' onChange={e => setEmail(e.target.value)} />
+                    <Form.Control type='email' placeholder='required' onChange={e => setEmail(e.target.value)} />
                 </Form.Group>
                 <Form.Group controlId='registerBirthdate'>
                     <Form.Label>Birthdate:</Form.Label>
-                    <Form.Control type='text' onChange={e => setBirthdate(e.target.value)} />
+                    <Form.Control type='Date' placeholder='not required' onChange={e => setBirthdate(e.target.value)} />
                 </Form.Group>
                 
                 <Button variant='success' type='submit' onClick={updateUserInfo}>

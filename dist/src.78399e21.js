@@ -51607,6 +51607,7 @@ function ProfileView(props) {
     controlId: "registerUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
+    placeholder: "required length of 5 min.",
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
@@ -51614,20 +51615,23 @@ function ProfileView(props) {
     controlId: "registerPassword"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Password:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "password",
+    placeholder: "required",
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
   })), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "registerEmail"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Email:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
-    type: "text",
+    type: "email",
+    placeholder: "required",
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
   })), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "registerBirthdate"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Birthdate:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
-    type: "text",
+    type: "Date",
+    placeholder: "not required",
     onChange: function onChange(e) {
       return setBirthdate(e.target.value);
     }
