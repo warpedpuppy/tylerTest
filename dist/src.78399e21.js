@@ -37340,7 +37340,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "removeFromFavs", function () {
-      _axios.default.post("".concat(_config.default.APIURL, "/users/").concat(_this.props.user, "/movies/").concat(_this.props.movie._id), {}, {
+      _axios.default.post("".concat(_config.default.APIURL, "/users/").concat(_this.props.user, "/movies/").concat(_this.props.movie._id), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem('token'))
         }
