@@ -23,12 +23,12 @@ export class MovieCard extends React.Component {
     }
 
     removeFromFavs= () => {
-        axios.delete(`${config.APIURL}/users/${this.props.user}/movies/${this.props.movie._id}`, {
+        axios.post(`${config.APIURL}/users/${this.props.user}/movies/${this.props.movie._id}`, {}, {
             headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 
         })
         .then(result => {
-            this.props.removeFavoriteFromUserData(this.props.movie._id)
+            this.props.addFavoriteToUserData(this.props.movie._id)
 
         })
         .catch(e => {
