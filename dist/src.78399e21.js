@@ -37340,7 +37340,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "removeFromFavs", function () {
-      _axios.default.post("".concat(_config.default.APIURL, "/users/").concat(_this.props.user, "/movies/").concat(_this.props.movie._id), {
+      _axios.default.delete("".concat(_config.default.APIURL, "/users/").concat(_this.props.user, "/movies/").concat(_this.props.movie._id), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem('token'))
         }
@@ -52173,7 +52173,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62785" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52954" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
