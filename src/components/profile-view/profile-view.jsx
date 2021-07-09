@@ -59,7 +59,7 @@ export function ProfileView(props) {
                 <Button variant='primary'>Back</Button>
             </Link>
             <h2>Favorite Movies</h2>
-            {props.favoriteMovies.map((m) => <MovieCard key={m._id} movie={m} />)}
+            {props.favoriteMovies.map((m) => <MovieCard key={m._id} movie={m} userData={props.userData} />)}
             <Button variant='danger'>Deregister</Button>
         </div>
     )

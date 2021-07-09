@@ -51646,7 +51646,8 @@ function ProfileView(props) {
   }, "Back")), /*#__PURE__*/_react.default.createElement("h2", null, "Favorite Movies"), props.favoriteMovies.map(function (m) {
     return /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
       key: m._id,
-      movie: m
+      movie: m,
+      userData: props.userData
     });
   }), /*#__PURE__*/_react.default.createElement(_Button.default, {
     variant: "danger"
