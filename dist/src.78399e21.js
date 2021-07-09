@@ -51566,6 +51566,8 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function ProfileView(props) {
+  var _this = this;
+
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -51589,7 +51591,10 @@ function ProfileView(props) {
   var updateUserInfo = function updateUserInfo(e) {
     e.preventDefault();
 
-    _axios.default.post("".concat(_config.default.APIURL, "/users"), {
+    _axios.default.patch("".concat(_config.default.APIURL, "/users/").concat(props.user), {}, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      },
       Username: username,
       Password: password,
       Email: email,
@@ -51599,7 +51604,17 @@ function ProfileView(props) {
       console.log(data);
       window.open('/', '_self');
     }).catch(function (e) {
-      console.log('error registering the user');
+      console.log('error updating the user');
+    });
+  };
+
+  var deregisterUser = function deregisterUser() {
+    _axios.default.delete("".concat(_config.default.APIURL, "/users/").concat(_this.props.user), {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      }
+    }).then(function (result) {}).catch(function (e) {
+      console.error(e);
     });
   };
 
@@ -51650,7 +51665,8 @@ function ProfileView(props) {
       userData: props.userData
     });
   }), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    variant: "danger"
+    variant: "danger",
+    onClick: deregisterUser
   }, "Deregister"));
 }
 },{"react":"../node_modules/react/index.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","axios":"../node_modules/axios/index.js","../../config":"config.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {

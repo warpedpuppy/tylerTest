@@ -14,7 +14,8 @@ export function ProfileView(props) {
 
     const updateUserInfo = (e) => {
         e.preventDefault();
-        axios.post(`${config.APIURL}/users`, {
+        axios.patch(`${config.APIURL}/users/${props.user}`, {}, {
+            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
             Username: username,
             Password: password,
             Email: email,
@@ -26,8 +27,21 @@ export function ProfileView(props) {
             window.open('/', '_self');
         })
         .catch(e => {
-            console.log('error registering the user')
+            console.log('error updating the user')
         });
+    }
+
+    const deregisterUser= () => {
+        axios.delete(`${config.APIURL}/users/${this.props.user}`, {
+            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+
+        })
+        .then(result => {
+
+        })
+        .catch(e => {
+            console.error(e)
+        })
     }
 
     return (
@@ -60,7 +74,7 @@ export function ProfileView(props) {
             </Link>
             <h2>Favorite Movies</h2>
             {props.favoriteMovies.map((m) => <MovieCard key={m._id} movie={m} userData={props.userData} />)}
-            <Button variant='danger'>Deregister</Button>
+            <Button variant='danger' onClick={deregisterUser}>Deregister</Button>
         </div>
     )
 }
