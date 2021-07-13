@@ -14,31 +14,41 @@ export function ProfileView(props) {
 
     const updateUserInfo = (e) => {
         e.preventDefault();
-        axios.patch(`${config.APIURL}/users/${props.user}`, {}, {
-            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
+        axios.put(`${config.APIURL}/users/${props.user}`, {
             Username: username,
             Password: password,
             Email: email,
             Birthdate: birthdate
+        },
+        {
+            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}    
         })
         .then(response => {
             const data = response.data;
             console.log(data);
-            window.open('/', '_self');
+            // window.open('/', '_self');
+            props.updateLocalUserData({
+                Username: username,
+                Password: password,
+                Email: email,
+                Birthdate: birthdate
+            })
+            props.history.push('/')
         })
         .catch(e => {
             console.log('error updating the user')
         });
     }
 
-    function deregisterUser(token) {
-        axios.delete(`${config.APIURL}/users`, {
+    function deregisterUser() {
+        axios.delete(`${config.APIURL}/users/${props.user}`, {
             headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 
         })
         .then(response => {
             console.log(response);
-            console.log(`${user} has been deleted`)
+            console.log(`${props.user} has been deleted`);
+            // window.open('/', '_self');
         })
         .catch(e => {
             console.error(e)

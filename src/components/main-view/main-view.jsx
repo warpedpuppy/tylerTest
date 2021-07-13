@@ -68,6 +68,7 @@ export class MainView extends React.Component {
         })
         .then(response => {
             // Assign the result to the state
+            console.log(response.data)
             this.setState({
                 userData: response.data
             });
@@ -115,6 +116,23 @@ export class MainView extends React.Component {
         this.setState({
             user: null
         });
+    }
+
+    updateLocalUserData = (object) => {
+        let tempObject = {...this.state.userData};
+        if (object.Username) {
+            tempObject.Username = object.Usename
+        }
+        if (object.Password) {
+            tempObject.Password = object.Password
+        }
+        if (object.Email) {
+            tempObject.Email = object.Email
+        }
+        if (object.Birthdate) {
+            tempObject.Birthdate = object.Birthdate
+        }
+        this.setState( { userData: tempObject }, () => console.log(this.state.userData))
     }
 
     onRegister(register) {
@@ -206,13 +224,13 @@ export class MainView extends React.Component {
                                     <DirectorsView movies={movies.filter(m => m.Director.Name === match.params.name)} />
                                 </Col>
                         }} />
-                        <Route exact path='/userview' render={() => {
+                        <Route exact path='/userview' render={({ history }) => {
                             if (!user) {
                                 return <Col>
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>}
                             return (
-                                <ProfileView favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))} userData={userData} />
+                                <ProfileView updateLocalUserData={this.updateLocalUserData} user={user} favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))} userData={userData} history={history} />
                             )
                         }} />
                     </Row>

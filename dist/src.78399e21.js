@@ -51589,31 +51589,39 @@ function ProfileView(props) {
   var updateUserInfo = function updateUserInfo(e) {
     e.preventDefault();
 
-    _axios.default.patch("".concat(_config.default.APIURL, "/users/").concat(props.user), {}, {
-      headers: {
-        Authorization: "Bearer ".concat(localStorage.getItem('token'))
-      },
+    _axios.default.put("".concat(_config.default.APIURL, "/users/").concat(props.user), {
       Username: username,
       Password: password,
       Email: email,
       Birthdate: birthdate
+    }, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      }
     }).then(function (response) {
       var data = response.data;
-      console.log(data);
-      window.open('/', '_self');
+      console.log(data); // window.open('/', '_self');
+
+      props.updateLocalUserData({
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthdate: birthdate
+      });
+      props.history.push('/');
     }).catch(function (e) {
       console.log('error updating the user');
     });
   };
 
-  function deregisterUser(token) {
-    _axios.default.delete("".concat(_config.default.APIURL, "/users"), {
+  function deregisterUser() {
+    _axios.default.delete("".concat(_config.default.APIURL, "/users/").concat(props.user), {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem('token'))
       }
     }).then(function (response) {
       console.log(response);
-      console.log("".concat(user, " has been deleted"));
+      console.log("".concat(props.user, " has been deleted")); // window.open('/', '_self');
     }).catch(function (e) {
       console.error(e);
     });
@@ -51768,6 +51776,32 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "updateLocalUserData", function (object) {
+      var tempObject = _objectSpread({}, _this.state.userData);
+
+      if (object.Username) {
+        tempObject.Username = object.Usename;
+      }
+
+      if (object.Password) {
+        tempObject.Password = object.Password;
+      }
+
+      if (object.Email) {
+        tempObject.Email = object.Email;
+      }
+
+      if (object.Birthdate) {
+        tempObject.Birthdate = object.Birthdate;
+      }
+
+      _this.setState({
+        userData: tempObject
+      }, function () {
+        return console.log(_this.state.userData);
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "toggleRegister", function (e) {
       e.preventDefault();
 
@@ -51845,6 +51879,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         }
       }).then(function (response) {
         // Assign the result to the state
+        console.log(response.data);
+
         _this3.setState({
           userData: response.data
         });
@@ -52002,7 +52038,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/userview",
-        render: function render() {
+        render: function render(_ref4) {
+          var history = _ref4.history;
+
           if (!user) {
             return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
               onLoggedIn: function onLoggedIn(user) {
@@ -52012,10 +52050,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           }
 
           return /*#__PURE__*/_react.default.createElement(_profileView.ProfileView, {
+            updateLocalUserData: _this4.updateLocalUserData,
+            user: user,
             favoriteMovies: movies.filter(function (m) {
               return userData.FavoriteMovies.includes(m._id);
             }),
-            userData: userData
+            userData: userData,
+            history: history
           });
         }
       }))));
@@ -52191,7 +52232,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58079" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61800" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
