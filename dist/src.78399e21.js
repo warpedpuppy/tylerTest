@@ -51566,8 +51566,6 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function ProfileView(props) {
-  var _this = this;
-
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -51608,15 +51606,18 @@ function ProfileView(props) {
     });
   };
 
-  var deregisterUser = function deregisterUser() {
-    _axios.default.delete("".concat(_config.default.APIURL, "/users/").concat(_this.props.user), {
+  function deregisterUser(token) {
+    _axios.default.delete("".concat(_config.default.APIURL, "/users"), {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem('token'))
       }
-    }).then(function (result) {}).catch(function (e) {
+    }).then(function (response) {
+      console.log(response);
+      console.log("".concat(user, " has been deleted"));
+    }).catch(function (e) {
       console.error(e);
     });
-  };
+  }
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Update Information"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "registerUsername"
@@ -52190,7 +52191,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52954" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58079" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

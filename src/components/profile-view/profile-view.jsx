@@ -31,13 +31,14 @@ export function ProfileView(props) {
         });
     }
 
-    const deregisterUser= () => {
-        axios.delete(`${config.APIURL}/users/${this.props.user}`, {
+    function deregisterUser(token) {
+        axios.delete(`${config.APIURL}/users`, {
             headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 
         })
-        .then(result => {
-
+        .then(response => {
+            console.log(response);
+            console.log(`${user} has been deleted`)
         })
         .catch(e => {
             console.error(e)
