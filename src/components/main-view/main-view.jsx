@@ -176,14 +176,15 @@ export class MainView extends React.Component {
         
         return (
             <div>
-                
-                
                 <Router>
                     <Link to='/userview'>
                         <Button variant='primary'>
                             Go to Profile
                         </Button>
                     </Link>
+                    <Button variant='danger' onClick={this.onLoggedOut}>
+                        Logout
+                    </Button>
                     <Row className='main-view justify-content-md-center'>
                         <Route exact path='/' render={() => {
                             if (!user) return <Col>

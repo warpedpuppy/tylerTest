@@ -22062,28 +22062,36 @@ class MainView extends _reactDefault.default.Component {
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 181
+                lineNumber: 179
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: "/userview",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 182
+                lineNumber: 180
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
             variant: "primary",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 183
+                lineNumber: 181
             },
             __self: this
-        }, "Go to Profile")), /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
+        }, "Go to Profile")), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+            variant: "danger",
+            onClick: this.onLoggedOut,
+            __source: {
+                fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 185
+            },
+            __self: this
+        }, "Logout"), /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 187
+                lineNumber: 188
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22107,7 +22115,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 188
+                lineNumber: 189
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22117,7 +22125,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 198
+                lineNumber: 199
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22135,7 +22143,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 203
+                lineNumber: 204
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22154,7 +22162,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 211
+                lineNumber: 212
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22173,7 +22181,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 219
+                lineNumber: 220
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22194,7 +22202,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 227
+                lineNumber: 228
             },
             __self: this
         })))));
