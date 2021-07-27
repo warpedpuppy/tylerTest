@@ -21970,18 +21970,18 @@ class MainView extends _reactDefault.default.Component {
         localStorage.setItem('user', authData.user.Username);
         this.getMovies(authData.token);
     }
-    onLoggedOut() {
+    onLoggedOut = ()=>{
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         this.setState({
             user: null
         });
-    }
+    };
     updateLocalUserData = (object)=>{
         let tempObject = {
             ...this.state.userData
         };
-        if (object.Username) tempObject.Username = object.Usename;
+        if (object.Username) tempObject.Username = object.Username;
         if (object.Password) tempObject.Password = object.Password;
         if (object.Email) tempObject.Email = object.Email;
         if (object.Birthdate) tempObject.Birthdate = object.Birthdate;
@@ -22137,6 +22137,10 @@ class MainView extends _reactDefault.default.Component {
                 return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
                     md: 8
                 }, /*#__PURE__*/ _reactDefault.default.createElement(_movieView.MovieView, {
+                    user: user,
+                    userData: userData,
+                    addFavoriteToUserData: this.addFavoriteToUserData,
+                    removeFavoriteFromUserData: this.removeFavoriteFromUserData,
                     movie: movies.find((m)=>m._id === match.params.movieId
                     )
                 })));
@@ -22156,13 +22160,17 @@ class MainView extends _reactDefault.default.Component {
                 return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
                     md: 8
                 }, /*#__PURE__*/ _reactDefault.default.createElement(_genresView.GenresView, {
+                    user: user,
+                    userData: userData,
+                    addFavoriteToUserData: this.addFavoriteToUserData,
+                    removeFavoriteFromUserData: this.removeFavoriteFromUserData,
                     movies: movies.filter((m)=>m.Genre.Name === match.params.name
                     )
                 })));
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 212
+                lineNumber: 218
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22175,13 +22183,17 @@ class MainView extends _reactDefault.default.Component {
                 return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
                     md: 8
                 }, /*#__PURE__*/ _reactDefault.default.createElement(_directorsView.DirectorsView, {
+                    user: user,
+                    userData: userData,
+                    addFavoriteToUserData: this.addFavoriteToUserData,
+                    removeFavoriteFromUserData: this.removeFavoriteFromUserData,
                     movies: movies.filter((m)=>m.Director.Name === match.params.name
                     )
                 })));
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 220
+                lineNumber: 231
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22192,17 +22204,20 @@ class MainView extends _reactDefault.default.Component {
                     onLoggedIn: (user1)=>this.onLoggedIn(user1)
                 })));
                 return(/*#__PURE__*/ _reactDefault.default.createElement(_profileView.ProfileView, {
+                    onLoggedOut: this.onLoggedOut,
                     updateLocalUserData: this.updateLocalUserData,
                     user: user,
                     favoriteMovies: movies.filter((m)=>userData.FavoriteMovies.includes(m._id)
                     ),
                     userData: userData,
-                    history: history
+                    history: history,
+                    addFavoriteToUserData: this.addFavoriteToUserData,
+                    removeFavoriteFromUserData: this.removeFavoriteFromUserData
                 }));
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 228
+                lineNumber: 243
             },
             __self: this
         })))));
@@ -28416,7 +28431,7 @@ class MovieCard extends _reactDefault.default.Component {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         }).then((result)=>{
-            this.props.addFavoriteToUserData(this.props.movie._id);
+            this.props.removeFavoriteFromUserData(this.props.movie._id);
         }).catch((e)=>{
             console.error(e);
         });
@@ -28689,6 +28704,10 @@ var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactRouterDom = require("react-router-dom");
 var _reactBootstrap = require("react-bootstrap");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _config = require("../../config");
+var _configDefault = parcelHelpers.interopDefault(_config);
 class MovieView extends _reactDefault.default.Component {
     keypressCallback(event) {
         console.log(event.key);
@@ -28699,121 +28718,154 @@ class MovieView extends _reactDefault.default.Component {
     componentWillUnmount() {
         document.removeEventListener('keypress', this.keypressCallback);
     }
+    addToFavs = ()=>{
+        _axiosDefault.default.post(`${_configDefault.default.APIURL}/users/${this.props.user}/movies/${this.props.movie._id}`, {
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then((result)=>{
+            this.props.addFavoriteToUserData(this.props.movie._id);
+        }).catch((e)=>{
+            console.error(e);
+        });
+    };
+    removeFromFavs = ()=>{
+        _axiosDefault.default.delete(`${_configDefault.default.APIURL}/users/${this.props.user}/movies/${this.props.movie._id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then((result)=>{
+            console.log(result);
+            this.props.removeFavoriteFromUserData(this.props.movie._id);
+        }).catch((e)=>{
+            console.error(e);
+        });
+    };
     render() {
         const { movie  } = this.props;
         return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "movie-view",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 24
+                lineNumber: 56
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "movie-poster",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 25
+                lineNumber: 57
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("img", {
             src: `/img/${movie.ImagePath}`,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 26
+                lineNumber: 58
             },
             __self: this
         })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "movie-title",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 28
+                lineNumber: 60
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 29
+                lineNumber: 61
             },
             __self: this
         }, "Title: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 30
+                lineNumber: 62
             },
             __self: this
         }, movie.Title)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "movie-description",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 32
+                lineNumber: 64
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 33
+                lineNumber: 65
             },
             __self: this
         }, "Description: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 34
+                lineNumber: 66
             },
             __self: this
         }, movie.Description)), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/directors/${movie.Director.Name}`,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 36
+                lineNumber: 68
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
             variant: "link",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 37
+                lineNumber: 69
             },
             __self: this
         }, "Director")), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/genres/${movie.Genre.Name}`,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 39
+                lineNumber: 71
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
             variant: "link",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 40
+                lineNumber: 72
             },
             __self: this
         }, "Genre")), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/`,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 42
+                lineNumber: 74
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
             variant: "primary",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 43
+                lineNumber: 75
             },
             __self: this
-        }, "Back")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+        }, "Back")), !this.props.userData.FavoriteMovies.includes(movie._id) && /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
             variant: "primary",
+            onClick: this.addToFavs,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 45
+                lineNumber: 77
             },
             __self: this
-        }, "Add to Favorites")));
+        }, "Add to Favorites"), this.props.userData.FavoriteMovies.includes(movie._id) && /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+            variant: "danger",
+            onClick: this.removeFromFavs,
+            __source: {
+                fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 78
+            },
+            __self: this
+        }, "Remove from Favorites")));
     }
 }
 MovieView.propTypes = {
@@ -28831,8 +28883,7 @@ MovieView.propTypes = {
             Birth: _propTypesDefault.default.string.isRequired,
             Death: _propTypesDefault.default.string
         })
-    }).isRequired,
-    onBackClick: _propTypesDefault.default.func.isRequired
+    }).isRequired
 };
 
   helpers.postlude(module);
@@ -28840,7 +28891,7 @@ MovieView.propTypes = {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"4n7hB":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","axios":"7rA65","../../config":"5yJJr"}],"4n7hB":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
@@ -39667,19 +39718,36 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _movieCard = require("../movie-card/movie-card");
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
+var _reactRouterDom = require("react-router-dom");
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 function DirectorsView(props) {
     console.log(props);
     let directorsName = props.movies[0].Director.Name;
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\directors-view\\directors-view.jsx",
-            lineNumber: 9
+            lineNumber: 11
         },
         __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+        to: `/`,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\directors-view\\directors-view.jsx",
-            lineNumber: 10
+            lineNumber: 12
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+        variant: "link",
+        __source: {
+            fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\directors-view\\directors-view.jsx",
+            lineNumber: 13
+        },
+        __self: this
+    }, "Home")), /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+        __source: {
+            fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\directors-view\\directors-view.jsx",
+            lineNumber: 15
         },
         __self: this
     }, directorsName), props.movies.map((movie)=>/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
@@ -39687,14 +39755,18 @@ function DirectorsView(props) {
             key: movie._id,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\directors-view\\directors-view.jsx",
-                lineNumber: 12
+                lineNumber: 17
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
+            user: props.user,
+            userData: props.userData,
+            addFavoriteToUserData: props.addFavoriteToUserData,
+            removeFavoriteFromUserData: props.removeFavoriteFromUserData,
             movie: movie,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\directors-view\\directors-view.jsx",
-                lineNumber: 13
+                lineNumber: 18
             },
             __self: this
         }))
@@ -39709,7 +39781,7 @@ $RefreshReg$(_c, "DirectorsView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","../movie-card/movie-card":"ERuoW","react-bootstrap/Col":"2D0r8","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"4zyeI":[function(require,module,exports) {
+},{"react":"3b2NM","../movie-card/movie-card":"ERuoW","react-bootstrap/Col":"2D0r8","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l"}],"4zyeI":[function(require,module,exports) {
 var helpers = require("../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39725,19 +39797,36 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _movieCard = require("../movie-card/movie-card");
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
+var _reactRouterDom = require("react-router-dom");
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 function GenresView(props) {
     console.log(props);
     let genresName = props.movies[0].Genre.Name;
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\genres-view\\genres-view.jsx",
-            lineNumber: 9
+            lineNumber: 11
         },
         __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+        to: `/`,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\genres-view\\genres-view.jsx",
-            lineNumber: 10
+            lineNumber: 12
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+        variant: "link",
+        __source: {
+            fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\genres-view\\genres-view.jsx",
+            lineNumber: 13
+        },
+        __self: this
+    }, "Home")), /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+        __source: {
+            fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\genres-view\\genres-view.jsx",
+            lineNumber: 15
         },
         __self: this
     }, genresName), props.movies.map((movie)=>/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
@@ -39745,14 +39834,18 @@ function GenresView(props) {
             key: movie._id,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\genres-view\\genres-view.jsx",
-                lineNumber: 12
+                lineNumber: 17
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
+            user: props.user,
+            userData: props.userData,
+            addFavoriteToUserData: props.addFavoriteToUserData,
+            removeFavoriteFromUserData: props.removeFavoriteFromUserData,
             movie: movie,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\genres-view\\genres-view.jsx",
-                lineNumber: 13
+                lineNumber: 18
             },
             __self: this
         }))
@@ -39767,7 +39860,7 @@ $RefreshReg$(_c, "GenresView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","../movie-card/movie-card":"ERuoW","react-bootstrap/Col":"2D0r8","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"6xIb0":[function(require,module,exports) {
+},{"react":"3b2NM","../movie-card/movie-card":"ERuoW","react-bootstrap/Col":"2D0r8","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l"}],"6xIb0":[function(require,module,exports) {
 var helpers = require("../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39812,6 +39905,7 @@ function ProfileView(props) {
             const data = response.data;
             console.log(data);
             // window.open('/', '_self');
+            localStorage.setItem('user', username);
             props.updateLocalUserData({
                 Username: username,
                 Password: password,
@@ -39831,7 +39925,8 @@ function ProfileView(props) {
         }).then((response)=>{
             console.log(response);
             console.log(`${props.user} has been deleted`);
-        // window.open('/', '_self');
+            // window.open('/', '_self');
+            props.onLoggedOut();
         }).catch((e)=>{
             console.error(e);
         });
@@ -39839,32 +39934,32 @@ function ProfileView(props) {
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 59
+            lineNumber: 61
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("h2", {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 60
+            lineNumber: 62
         },
         __self: this
     }, "Update Information"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default, {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 61
+            lineNumber: 63
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
         controlId: "registerUsername",
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 62
+            lineNumber: 64
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 63
+            lineNumber: 65
         },
         __self: this
     }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
@@ -39874,20 +39969,20 @@ function ProfileView(props) {
         ,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 64
+            lineNumber: 66
         },
         __self: this
     })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
         controlId: "registerPassword",
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 66
+            lineNumber: 68
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 67
+            lineNumber: 69
         },
         __self: this
     }, "Password:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
@@ -39897,20 +39992,20 @@ function ProfileView(props) {
         ,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 68
+            lineNumber: 70
         },
         __self: this
     })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
         controlId: "registerEmail",
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 70
+            lineNumber: 72
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 71
+            lineNumber: 73
         },
         __self: this
     }, "Email:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
@@ -39920,20 +40015,20 @@ function ProfileView(props) {
         ,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 72
+            lineNumber: 74
         },
         __self: this
     })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
         controlId: "registerBirthdate",
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 74
+            lineNumber: 76
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 75
+            lineNumber: 77
         },
         __self: this
     }, "Birthdate:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
@@ -39943,7 +40038,7 @@ function ProfileView(props) {
         ,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 76
+            lineNumber: 78
         },
         __self: this
     })), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -39952,36 +40047,39 @@ function ProfileView(props) {
         onClick: updateUserInfo,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 79
+            lineNumber: 81
         },
         __self: this
     }, "Submit")), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
         to: `/`,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 83
+            lineNumber: 85
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
         variant: "primary",
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 84
+            lineNumber: 86
         },
         __self: this
     }, "Back")), /*#__PURE__*/ _reactDefault.default.createElement("h2", {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 86
+            lineNumber: 88
         },
         __self: this
     }, "Favorite Movies"), props.favoriteMovies.map((m)=>/*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
+            user: props.user,
+            userData: props.userData,
+            addFavoriteToUserData: props.addFavoriteToUserData,
+            removeFavoriteFromUserData: props.removeFavoriteFromUserData,
             key: m._id,
             movie: m,
-            userData: props.userData,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 87
+                lineNumber: 89
             },
             __self: this
         })
@@ -39990,7 +40088,7 @@ function ProfileView(props) {
         onClick: deregisterUser,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 88
+            lineNumber: 95
         },
         __self: this
     }, "Deregister")));
