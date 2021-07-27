@@ -110,7 +110,7 @@ export class MainView extends React.Component {
         this.getMovies(authData.token);
     }
 
-    onLoggedOut() {
+    onLoggedOut = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         this.setState({
@@ -121,7 +121,7 @@ export class MainView extends React.Component {
     updateLocalUserData = (object) => {
         let tempObject = {...this.state.userData};
         if (object.Username) {
-            tempObject.Username = object.Usename
+            tempObject.Username = object.Username
         }
         if (object.Password) {
             tempObject.Password = object.Password
@@ -206,7 +206,13 @@ export class MainView extends React.Component {
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
                             return <Col md={8}>
-                                    <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
+                                    <MovieView
+                                    user={user}
+                                    userData={userData}
+                                    addFavoriteToUserData={this.addFavoriteToUserData}
+                                    removeFavoriteFromUserData={this.removeFavoriteFromUserData} 
+                                    movie={movies.find(m => m._id === match.params.movieId)}
+                                     />
                                 </Col>
                         }} />
                         <Route exact path='/genres/:name' render={({ match }) => {
@@ -214,7 +220,12 @@ export class MainView extends React.Component {
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
                             return <Col md={8}>
-                                    <GenresView movies={movies.filter(m => m.Genre.Name === match.params.name)} />
+                                    <GenresView
+                                    user={user}
+                                    userData={userData}
+                                    addFavoriteToUserData={this.addFavoriteToUserData}
+                                    removeFavoriteFromUserData={this.removeFavoriteFromUserData} 
+                                    movies={movies.filter(m => m.Genre.Name === match.params.name)} />
                                 </Col>     
                         }} />
                         <Route exact path='/directors/:name' render={({ match }) => {
@@ -222,7 +233,11 @@ export class MainView extends React.Component {
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
                             return <Col md={8}>
-                                    <DirectorsView movies={movies.filter(m => m.Director.Name === match.params.name)} />
+                                    <DirectorsView user={user}
+                                    userData={userData}
+                                    addFavoriteToUserData={this.addFavoriteToUserData}
+                                    removeFavoriteFromUserData={this.removeFavoriteFromUserData}  
+                                    movies={movies.filter(m => m.Director.Name === match.params.name)} />
                                 </Col>
                         }} />
                         <Route exact path='/userview' render={({ history }) => {
@@ -231,7 +246,15 @@ export class MainView extends React.Component {
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>}
                             return (
-                                <ProfileView updateLocalUserData={this.updateLocalUserData} user={user} favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))} userData={userData} history={history} />
+                                <ProfileView 
+                                onLoggedOut={this.onLoggedOut} 
+                                updateLocalUserData={this.updateLocalUserData} 
+                                user={user} 
+                                favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))} 
+                                userData={userData} 
+                                history={history}
+                                addFavoriteToUserData={this.addFavoriteToUserData}
+                                removeFavoriteFromUserData={this.removeFavoriteFromUserData} />
                             )
                         }} />
                     </Row>

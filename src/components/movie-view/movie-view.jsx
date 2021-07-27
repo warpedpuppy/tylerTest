@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import config from '../../config';
 
 export class MovieView extends React.Component {
 
@@ -15,6 +17,36 @@ export class MovieView extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener('keypress', this.keypressCallback);
+    }
+
+    addToFavs= () => {
+        axios.post(`${config.APIURL}/users/${this.props.user}/movies/${this.props.movie._id}`, {}, {
+            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+
+        })
+        .then(result => {
+            this.props.addFavoriteToUserData(this.props.movie._id)
+
+        })
+        .catch(e => {
+            console.error(e)
+        })
+    }
+
+    removeFromFavs= () => {
+        axios.delete(`${config.APIURL}/users/${this.props.user}/movies/${this.props.movie._id}`, {
+            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+
+        })
+        .then(result => {
+            console.log(result);
+
+            this.props.removeFavoriteFromUserData(this.props.movie._id)
+
+        })
+        .catch(e => {
+            console.error(e)
+        })
     }
 
     render() {
@@ -42,7 +74,8 @@ export class MovieView extends React.Component {
                 <Link to={`/`}>
                     <Button variant='primary'>Back</Button>
                 </Link>
-                <Button variant='primary'>Add to Favorites</Button>
+                {!this.props.userData.FavoriteMovies.includes(movie._id) && <Button variant='primary' onClick={this.addToFavs}>Add to Favorites</Button>}
+                {this.props.userData.FavoriteMovies.includes(movie._id) && <Button variant='danger' onClick={this.removeFromFavs}>Remove from Favorites</Button>}
             </div>
         );
     }
@@ -63,6 +96,5 @@ MovieView.propTypes = {
             Birth: PropTypes.string.isRequired,
             Death: PropTypes.string,
         }),
-    }).isRequired,
-    onBackClick: PropTypes.func.isRequired
+    }).isRequired
 };

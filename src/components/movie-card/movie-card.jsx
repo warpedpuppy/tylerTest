@@ -28,7 +28,7 @@ export class MovieCard extends React.Component {
 
         })
         .then(result => {
-            this.props.addFavoriteToUserData(this.props.movie._id)
+            this.props.removeFavoriteFromUserData(this.props.movie._id)
 
         })
         .catch(e => {
