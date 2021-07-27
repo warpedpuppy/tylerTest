@@ -27,6 +27,7 @@ export function ProfileView(props) {
             const data = response.data;
             console.log(data);
             // window.open('/', '_self');
+            localStorage.setItem('user', username);
             props.updateLocalUserData({
                 Username: username,
                 Password: password,
@@ -49,6 +50,7 @@ export function ProfileView(props) {
             console.log(response);
             console.log(`${props.user} has been deleted`);
             // window.open('/', '_self');
+            props.onLoggedOut()
         })
         .catch(e => {
             console.error(e)
@@ -84,7 +86,12 @@ export function ProfileView(props) {
                 <Button variant='primary'>Back</Button>
             </Link>
             <h2>Favorite Movies</h2>
-            {props.favoriteMovies.map((m) => <MovieCard key={m._id} movie={m} userData={props.userData} />)}
+            {props.favoriteMovies.map((m) => <MovieCard user={props.user}
+                        userData={props.userData}
+                        addFavoriteToUserData={props.addFavoriteToUserData}
+                        removeFavoriteFromUserData={props.removeFavoriteFromUserData} 
+                        key={m._id} 
+                        movie={m} />)}
             <Button variant='danger' onClick={deregisterUser}>Deregister</Button>
         </div>
     )
