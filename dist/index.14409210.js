@@ -40054,20 +40054,20 @@ function ProfileView(props) {
         to: `/`,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 85
+            lineNumber: 89
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
         variant: "primary",
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 86
+            lineNumber: 90
         },
         __self: this
     }, "Back")), /*#__PURE__*/ _reactDefault.default.createElement("h2", {
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 88
+            lineNumber: 92
         },
         __self: this
     }, "Favorite Movies"), props.favoriteMovies.map((m)=>/*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
@@ -40079,7 +40079,7 @@ function ProfileView(props) {
             movie: m,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 89
+                lineNumber: 94
             },
             __self: this
         })
@@ -40088,7 +40088,7 @@ function ProfileView(props) {
         onClick: deregisterUser,
         __source: {
             fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 95
+            lineNumber: 102
         },
         __self: this
     }, "Deregister")));

@@ -78,7 +78,11 @@ export function ProfileView(props) {
                     <Form.Control type='Date' placeholder='not required' onChange={e => setBirthdate(e.target.value)} />
                 </Form.Group>
                 
-                <Button variant='success' type='submit' onClick={updateUserInfo}>
+                <Button 
+                    variant='success' 
+                    type='submit' 
+                    onClick={updateUserInfo}
+                >
                     Submit
                 </Button>  
             </Form>
@@ -86,12 +90,15 @@ export function ProfileView(props) {
                 <Button variant='primary'>Back</Button>
             </Link>
             <h2>Favorite Movies</h2>
-            {props.favoriteMovies.map((m) => <MovieCard user={props.user}
-                        userData={props.userData}
-                        addFavoriteToUserData={props.addFavoriteToUserData}
-                        removeFavoriteFromUserData={props.removeFavoriteFromUserData} 
-                        key={m._id} 
-                        movie={m} />)}
+            {props.favoriteMovies.map((m) => 
+                <MovieCard 
+                    user={props.user}
+                    userData={props.userData}
+                    addFavoriteToUserData={props.addFavoriteToUserData}
+                    removeFavoriteFromUserData={props.removeFavoriteFromUserData} 
+                    key={m._id} 
+                    movie={m}
+                />)}
             <Button variant='danger' onClick={deregisterUser}>Deregister</Button>
         </div>
     )
