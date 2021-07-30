@@ -1,10 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
+
 import { LoginView } from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration/registration';
 import { DirectorsView } from '../directors-view/directors-view';
@@ -21,7 +26,6 @@ export class MainView extends React.Component {
     constructor(){
         super();
         this.state = {
-            movies: [],
             selectedMovie: null,
             user: null,
             userData: {FavoriteMovies: []},
@@ -54,7 +58,7 @@ export class MainView extends React.Component {
         .then(response => {
             // Assign the result to the state
             this.setState({
-                movies: response.data
+                this.props.setMovies(response.data);
             });
         })
         .catch(function (error) {
@@ -162,6 +166,10 @@ export class MainView extends React.Component {
     }
 
     render() {
+
+        let { movies } = this.props;
+        let { user } = this.state;
+
         const { movies, selectedMovie, user, register, userData } = this.state;
         if (register) return <RegistrationView onRegister={register => this.onRegister(register)} toggleRegister={this.toggleRegister}/>;
 
@@ -190,11 +198,7 @@ export class MainView extends React.Component {
                             if (!user) return <Col>
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
-                            return movies.map(m => (
-                                <Col md={3} key={m._id}>
-                                    <MovieCard movie={m} userData={userData} user={user} addFavoriteToUserData={this.addFavoriteToUserData} removeFavoriteFromUserData={this.removeFavoriteFromUserData} />
-                                </Col>
-                            ))
+                            return <MoviesList movies={movies}/>
                         }} />
                         <Route path='/register' render={() => {
                             return <Col>
@@ -264,4 +268,8 @@ export class MainView extends React.Component {
     }
 }
 
-export default MainView;
+let mapStateToProps = state => {
+    return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies } )(MainView);

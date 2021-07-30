@@ -21880,7 +21880,9 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _reactRedux = require("react-redux");
 var _reactRouterDom = require("react-router-dom");
+var _actions = require("../../actions/actions");
 var _loginView = require("../login-view/login-view");
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
@@ -22031,20 +22033,20 @@ class MainView extends _reactDefault.default.Component {
             toggleRegister: this.toggleRegister,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 166
+                lineNumber: 172
             },
             __self: this
         }));
         if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 169
+                lineNumber: 175
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 170
+                lineNumber: 176
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
@@ -22053,7 +22055,7 @@ class MainView extends _reactDefault.default.Component {
             toggleRegister: this.toggleRegister,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 171
+                lineNumber: 177
             },
             __self: this
         }))));
@@ -22061,34 +22063,34 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 175
+                lineNumber: 181
             },
             __self: this
         }));
         return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 178
+                lineNumber: 184
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 179
+                lineNumber: 185
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: "/userview",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 180
+                lineNumber: 186
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
             variant: "primary",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 181
+                lineNumber: 187
             },
             __self: this
         }, "Go to Profile")), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -22096,14 +22098,14 @@ class MainView extends _reactDefault.default.Component {
             onClick: this.onLoggedOut,
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 185
+                lineNumber: 191
             },
             __self: this
         }, "Logout"), /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 188
+                lineNumber: 194
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22127,7 +22129,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 189
+                lineNumber: 195
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22137,7 +22139,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 199
+                lineNumber: 205
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22159,7 +22161,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 204
+                lineNumber: 210
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22182,7 +22184,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 218
+                lineNumber: 224
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22205,7 +22207,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 231
+                lineNumber: 237
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22229,7 +22231,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tyabo\\Desktop\\career_foundry\\Achievement3\\myFlix-client-2\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 243
+                lineNumber: 249
             },
             __self: this
         })))));
@@ -22242,7 +22244,7 @@ exports.default = MainView;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","axios":"7rA65","react-router-dom":"1PMSK","../login-view/login-view":"1zrcO","../movie-card/movie-card":"ERuoW","../movie-view/movie-view":"6mzeE","../registration/registration":"3fsBR","../directors-view/directors-view":"ttZyi","../genres-view/genres-view":"4zyeI","../profile-view/profile-view":"6xIb0","../../config":"5yJJr","react-bootstrap/Row":"3fzwD","react-bootstrap/Col":"2D0r8","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"7rA65":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","react-router-dom":"1PMSK","../login-view/login-view":"1zrcO","../movie-card/movie-card":"ERuoW","../movie-view/movie-view":"6mzeE","../registration/registration":"3fsBR","../directors-view/directors-view":"ttZyi","../genres-view/genres-view":"4zyeI","../profile-view/profile-view":"6xIb0","../../config":"5yJJr","react-bootstrap/Row":"3fzwD","react-bootstrap/Col":"2D0r8","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","react-redux":"7GDa4","../../actions/actions":"5S6cN"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
@@ -40115,7 +40117,7 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","../movie-card/movie-card":"ERuoW","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65","../../config":"5yJJr","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"HPtQV":[function() {},{}],"7GDa4":[function(require,module,exports) {
+},{"react":"3b2NM","../movie-card/movie-card":"ERuoW","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65","../../config":"5yJJr","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"7GDa4":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
@@ -41350,7 +41352,33 @@ exports.unstable_batchedUpdates = void 0;
 var _reactDom = require("react-dom");
 exports.unstable_batchedUpdates = _reactDom.unstable_batchedUpdates;
 
-},{"react-dom":"2sg1U"}],"2736c":[function(require,module,exports) {
+},{"react-dom":"2sg1U"}],"5S6cN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
+);
+parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
+);
+parcelHelpers.export(exports, "setMovies", ()=>setMovies
+);
+parcelHelpers.export(exports, "setFilter", ()=>setFilter
+);
+const SET_MOVIES = 'SET_MOVIES';
+const SET_FILTER = 'SET_FILTER';
+function setMovies(value) {
+    return {
+        type: SET_MOVIES,
+        value
+    };
+}
+function setFilter(value) {
+    return {
+        type: SET_FILTER,
+        value
+    };
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0"}],"HPtQV":[function() {},{}],"2736c":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _redux = require("redux");
@@ -41926,33 +41954,7 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 module.exports["default"] = module.exports, module.exports.__esModule = true;
 
-},{}],"5S6cN":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
-);
-parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
-);
-parcelHelpers.export(exports, "setMovies", ()=>setMovies
-);
-parcelHelpers.export(exports, "setFilter", ()=>setFilter
-);
-const SET_MOVIES = 'SET_MOVIES';
-const SET_FILTER = 'SET_FILTER';
-function setMovies(value) {
-    return {
-        type: SET_MOVIES,
-        value
-    };
-}
-function setFilter(value) {
-    return {
-        type: SET_FILTER,
-        value
-    };
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0"}],"3vUkb":[function(require,module,exports) {
+},{}],"3vUkb":[function(require,module,exports) {
 'use strict';
 var compose = require('redux').compose;
 exports.__esModule = true;
