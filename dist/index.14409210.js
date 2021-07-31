@@ -41358,12 +41358,38 @@ parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
 );
 parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
 );
+parcelHelpers.export(exports, "SET_USER", ()=>SET_USER
+);
+parcelHelpers.export(exports, "SET_FAVOITES", ()=>SET_FAVOITES
+);
+parcelHelpers.export(exports, "ADD_FAVORITE", ()=>ADD_FAVORITE
+);
+parcelHelpers.export(exports, "DELETE_FAVORITE", ()=>DELETE_FAVORITE
+);
+parcelHelpers.export(exports, "SET_VIEW", ()=>SET_VIEW
+);
 parcelHelpers.export(exports, "setMovies", ()=>setMovies
 );
 parcelHelpers.export(exports, "setFilter", ()=>setFilter
 );
+parcelHelpers.export(exports, "setUser", ()=>setUser
+);
+parcelHelpers.export(exports, "setFavorites", ()=>setFavorites
+);
+parcelHelpers.export(exports, "addFavorite", ()=>addFavorite
+);
+parcelHelpers.export(exports, "deleteFavorite", ()=>deleteFavorite
+);
+parcelHelpers.export(exports, "setView", ()=>setView
+);
+var _propTypes = require("prop-types");
 const SET_MOVIES = 'SET_MOVIES';
 const SET_FILTER = 'SET_FILTER';
+const SET_USER = 'SET_USER';
+const SET_FAVOITES = 'SET_FAVORITES';
+const ADD_FAVORITE = 'ADD_FAVORITE';
+const DELETE_FAVORITE = 'DELETE_FAVORITE';
+const SET_VIEW = 'SET_VIEW';
 function setMovies(value) {
     return {
         type: SET_MOVIES,
@@ -41376,8 +41402,38 @@ function setFilter(value) {
         value
     };
 }
+function setUser(value) {
+    return {
+        type: SET_USER,
+        value
+    };
+}
+function setFavorites(value) {
+    return {
+        type: SET_FAVOITES,
+        value
+    };
+}
+function addFavorite(value) {
+    return {
+        type: ADD_FAVORITE,
+        value
+    };
+}
+function deleteFavorite(value) {
+    return {
+        type: DELETE_FAVORITE,
+        value
+    };
+}
+function setView(value) {
+    return {
+        type: SET_VIEW,
+        value
+    };
+}
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0"}],"5IEGb":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","prop-types":"4dfy5"}],"5IEGb":[function(require,module,exports) {
 var helpers = require("../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
