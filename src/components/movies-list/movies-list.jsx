@@ -15,7 +15,7 @@ function MoviesList(props) {
     let filteredMovies = movies;
 
     if (visibilityFilter !== '') {
-        filteredMovies = movies.filter(m => m.Title.toLowerCase().includes(visibilityFilter.toLowerCase()));
+        filteredMovies = movies.filter(m => m.Title.toLowerCase().includes(visibilityFilter));
     }
 
     if (!movies) return <div className='main-view' />;
@@ -26,13 +26,7 @@ function MoviesList(props) {
         </Col>
         {filteredMovies.map(m => (
             <Col md={3} key={m._id}>
-                <MovieCard 
-                    movie={m}
-                    userData={userData}
-                    user={user}
-                    addFavoriteToUserData={this.addFavoriteToUserData}
-                    removeFavoriteFromUserData={this.removeFavoriteFromUserData}
-                />
+                <MovieCard movie={m} />
             </Col>
         ))};
     </>
