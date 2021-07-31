@@ -41575,9 +41575,43 @@ function movies(state = [], action) {
             return state;
     }
 }
+function selectedView(state = '1', action) {
+    switch(action.type){
+        case _actions.SET_VIEW:
+            return action.value;
+        default:
+            return state;
+    }
+}
+function currentFavorites(state = [], action) {
+    switch(action.type){
+        case _actions.SET_FAVOITES:
+            return action.value;
+        case _actions.ADD_FAVORITE:
+            let addedMovieState = state.concat(action.value);
+            return addedMovieState;
+        case _actions.DELETE_FAVORITE:
+            let deletedMovieState = state.filter((m)=>m !== action.value
+            );
+            return deletedMovieState;
+        default:
+            return state;
+    }
+}
+function user(state = '', action) {
+    switch(action.type){
+        case _actions.SET_USER:
+            return action.value;
+        default:
+            return state;
+    }
+}
 const moviesApp = _redux.combineReducers({
     visibilterFilter,
-    movies
+    movies,
+    currentFavorites,
+    user,
+    selectedView
 });
 exports.default = moviesApp;
 

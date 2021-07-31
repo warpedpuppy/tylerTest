@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { SET_FILTER, SET_MOVIES } from "../actions/actions";
+import { SET_FILTER, SET_MOVIES, SET_USER, SET_FAVOITES, ADD_FAVORITE, DELETE_FAVORITE, SET_VIEW } from "../actions/actions";
 
 function visibilterFilter(state = '', action) {
     switch (action.type) {
@@ -20,9 +20,45 @@ function movies(state = [], action) {
     }
 }
 
+function selectedView(state = '1', action) {
+    switch (action.type) {
+        case SET_VIEW:
+            return action.value;
+        default:
+            return state;
+    }
+}
+
+function currentFavorites(state = [], action) {
+    switch (action.type) {
+        case SET_FAVOITES:
+            return action.value;
+        case ADD_FAVORITE:
+            let addedMovieState = state.concat(action.value);
+            return addedMovieState;
+        case DELETE_FAVORITE:
+            let deletedMovieState = state.filter((m) => m !== action.value);
+            return deletedMovieState;
+        default:
+            return state;
+    }
+}
+
+function user(state = '', action) {
+    switch (action.type) {
+        case SET_USER:
+            return action.value;
+        default:
+            return state;
+    }
+}
+
 const moviesApp = combineReducers({
     visibilterFilter,
-    movies
+    movies,
+    currentFavorites,
+    user,
+    selectedView
 })
 
 export default moviesApp;
