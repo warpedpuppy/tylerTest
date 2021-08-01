@@ -8,6 +8,9 @@
         "build": "parcel src/index.html",
         "heroku-postbuild": "parcel build src/index.html"
     },
+    "engines": {
+        "node": "15.1.0"
+    },
     "author": "",
     "license": "ISC",
     "dependencies": {
