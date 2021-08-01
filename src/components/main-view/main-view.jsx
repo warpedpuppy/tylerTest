@@ -195,7 +195,12 @@ export class MainView extends React.Component {
                             if (!user) return <Col>
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
-                            return <MoviesList movies={movies}/>
+                            return <MoviesList 
+                            user={user}
+                            userData={userData}
+                            addFavoriteToUserData={this.addFavoriteToUserData}
+                            removeFavoriteFromUserData={this.removeFavoriteFromUserData}  
+                            movies={movies}/>
                         }} />
                         <Route path='/register' render={() => {
                             return <Col>
@@ -234,11 +239,13 @@ export class MainView extends React.Component {
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
                             return <Col md={8}>
-                                    <DirectorsView user={user}
+                                    <DirectorsView 
+                                    user={user}
                                     userData={userData}
                                     addFavoriteToUserData={this.addFavoriteToUserData}
                                     removeFavoriteFromUserData={this.removeFavoriteFromUserData}  
-                                    movies={movies.filter(m => m.Director.Name === match.params.name)} />
+                                    movies={movies.filter(m => m.Director.Name === match.params.name)} 
+                                    />
                                 </Col>
                         }} />
                         <Route exact path='/userview' render={({ history }) => {
